@@ -1,11 +1,10 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'publish-pytest-action'
+description: 'Publishing pytest result Github Action to comment on PR'
+author: 'sambyeol'
 
-# Add your action's branding here. This will appear on the GitHub Marketplace.
 branding:
-  icon: 'heart'
-  color: 'red'
+  icon: 'zap'
+  color: 'blue'
 
 # Define your inputs here.
 inputs:
