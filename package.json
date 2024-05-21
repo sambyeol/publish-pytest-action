@@ -1,7 +1,7 @@
 {
   "name": "publish-pytest-action",
   "description": "Publishing pytest result Github Action to comment on PR",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "author": "sambyeol",
   "private": true,
   "homepage": "https://github.com/sambyeol/publish-pytest-action",
