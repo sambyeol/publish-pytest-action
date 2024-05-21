@@ -31359,7 +31359,7 @@ async function run() {
         const nFailures = testResults['@_failures'];
         const nSkipped = testResults['@_skipped'];
         core.setOutput('failed', `${nFailures} failures`);
-        const coverageXml = core.getInput('coverage_xml', {
+        const coverageXml = core.getInput('coverage-xml', {
             required: true
         });
         const coverageString = await (0, promises_1.readFile)(coverageXml, 'utf8');

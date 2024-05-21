@@ -16,7 +16,7 @@ inputs:
     description: 'path to junitxml file'
     required: true
 
-  coverage_xml:
+  coverage-xml:
     description: 'path to coverage xml file'
     required: true
 

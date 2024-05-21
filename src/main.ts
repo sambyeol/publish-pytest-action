@@ -23,7 +23,7 @@ export async function run(): Promise<void> {
 
     core.setOutput('failed', `${nFailures} failures`)
 
-    const coverageXml: string = core.getInput('coverage_xml', {
+    const coverageXml: string = core.getInput('coverage-xml', {
       required: true
     })
     const coverageString = await readFile(coverageXml, 'utf8')
