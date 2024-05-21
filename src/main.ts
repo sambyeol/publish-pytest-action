@@ -47,16 +47,16 @@ export async function run(): Promise<void> {
         ...context.repo,
         issue_number: context.issue.number,
         body: `# Test Results
-  - Tests: ${nTests}
-  - Errors: ${nErrors}
-  - Failures: ${nFailures}
-  - Skipped: ${nSkipped}
-  
-  # Coverage Results
-  - Valid Lines: ${nValidLines}
-  - Covered Lines: ${nCoveredLines}
-  - Line Rate: ${nLineRate}%
-  `
+- Tests: ${nTests}
+- Errors: ${nErrors}
+- Failures: ${nFailures}
+- Skipped: ${nSkipped}
+
+# Coverage Results
+- Valid Lines: ${nValidLines}
+- Covered Lines: ${nCoveredLines}
+- Line Rate: ${nLineRate}%
+`
       })
     }
   } catch (error) {
