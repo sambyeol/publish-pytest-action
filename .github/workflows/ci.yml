@@ -57,7 +57,8 @@ jobs:
         id: test-action
         uses: ./
         with:
-          milliseconds: 2000
+          junitxml: data/test-results.xml
+          coverage_xml: data/coverage.xml
 
       - name: Print Output
         id: output

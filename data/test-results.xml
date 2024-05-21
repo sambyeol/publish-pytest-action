@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<testsuites>
+    <testsuite name="pytest" errors="0" failures="1" skipped="0" tests="10" time="1.355" timestamp="2024-05-21T06:42:59.652870" hostname="efd627ea7a08">
+        <testcase classname="tests.test_a" name="test_a1" time="0.01" />
+        <testcase classname="tests.test_a" name="test_a2" time="0.02" />
+        <testcase classname="tests.test_a" name="test_a3" time="0.01" />
+        <testcase classname="tests.test_a" name="test_a4" time="0.02" />
+        <testcase classname="tests.test_a" name="test_a5" time="0.01" />
+        <testcase classname="tests.test_b" name="test_b1" time="0.02" />
+        <testcase classname="tests.test_b" name="test_b2" time="0.01" />
+        <testcase classname="tests.test_b" name="test_b3" time="0.02">
+            <failure message="assert False">def test_b3():
+&gt;       assert False
+E       assert False
+tests/test_b.py:13: AssertionError</failure>
+        </testcase>
+        <testcase classname="tests.test_b" name="test_b4" time="0.01" />
+        <testcase classname="tests.test_b" name="test_b5" time="0.02" />
+    </testsuite>
+</testsuites>
