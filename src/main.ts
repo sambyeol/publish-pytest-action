@@ -2,7 +2,6 @@ import * as core from '@actions/core'
 import * as github from '@actions/github'
 import { XMLParser } from 'fast-xml-parser'
 import { readFile } from 'fs/promises'
-import { PullRequestEvent } from '@octokit/webhooks-definitions/schema'
 
 /**
  * The main function for the action.
@@ -41,10 +40,9 @@ export async function run(): Promise<void> {
     const token = core.getInput('github-token', { required: true })
     const octokit = github.getOctokit(token)
     if (context.eventName === 'pull_request') {
-      const prPayload = context.payload as PullRequestEvent
       octokit.rest.issues.createComment({
         ...context.repo,
-        issue_number: prPayload.number,
+        issue_number: context.issue.number,
         body: `# Test Results
   - Tests: ${nTests}
   - Errors: ${nErrors}
