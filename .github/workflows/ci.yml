@@ -59,7 +59,3 @@ jobs:
         with:
           junitxml: data/test-results.xml
           coverage_xml: data/coverage.xml
-
-      - name: Print Output
-        id: output
-        run: echo "${{ steps.test-action.outputs.time }}"
