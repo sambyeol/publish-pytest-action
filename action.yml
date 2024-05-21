@@ -12,8 +12,8 @@ inputs:
     default: ${{ github.token }}
     required: false
 
-  junitxml:
-    description: 'path to junitxml file'
+  junit-xml:
+    description: 'path to junit xml file'
     required: true
 
   coverage-xml:

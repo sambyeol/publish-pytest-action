@@ -11,10 +11,10 @@ export async function run(): Promise<void> {
   try {
     const parser = new XMLParser({ ignoreAttributes: false })
 
-    const junitxml: string = core.getInput('junitxml', { required: true })
-    const testResultsString = await readFile(junitxml, 'utf8')
+    const junitXml: string = core.getInput('junit-xml', { required: true })
+    const testResultsString = await readFile(junitXml, 'utf8')
     const testResults = parser.parse(testResultsString).testsuites.testsuite
-    core.debug(`Test results loaded: ${junitxml}`)
+    core.debug(`Test results loaded: ${junitXml}`)
 
     const nTests = testResults['@_tests']
     const nErrors = testResults['@_errors']

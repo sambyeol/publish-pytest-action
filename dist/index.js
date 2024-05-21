@@ -31350,10 +31350,10 @@ const promises_1 = __nccwpck_require__(3292);
 async function run() {
     try {
         const parser = new fast_xml_parser_1.XMLParser({ ignoreAttributes: false });
-        const junitxml = core.getInput('junitxml', { required: true });
-        const testResultsString = await (0, promises_1.readFile)(junitxml, 'utf8');
+        const junitXml = core.getInput('junit-xml', { required: true });
+        const testResultsString = await (0, promises_1.readFile)(junitXml, 'utf8');
         const testResults = parser.parse(testResultsString).testsuites.testsuite;
-        core.debug(`Test results loaded: ${junitxml}`);
+        core.debug(`Test results loaded: ${junitXml}`);
         const nTests = testResults['@_tests'];
         const nErrors = testResults['@_errors'];
         const nFailures = testResults['@_failures'];

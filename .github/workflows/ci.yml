@@ -57,5 +57,5 @@ jobs:
         id: test-action
         uses: ./
         with:
-          junitxml: data/test-results.xml
+          junit-xml: data/test-results.xml
           coverage-xml: data/coverage.xml
