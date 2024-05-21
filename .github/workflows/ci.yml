@@ -58,4 +58,4 @@ jobs:
         uses: ./
         with:
           junitxml: data/test-results.xml
-          coverage_xml: data/coverage.xml
+          coverage-xml: data/coverage.xml
