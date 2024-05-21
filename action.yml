@@ -6,17 +6,21 @@ branding:
   icon: 'zap'
   color: 'blue'
 
-# Define your inputs here.
 inputs:
-  milliseconds:
-    description: 'Your input description here'
+  junitxml:
+    description: 'path to junitxml file'
     required: true
-    default: '1000'
 
-# Define your outputs here.
+  coverage_xml:
+    description: 'path to coverage xml file'
+    required: true
+
 outputs:
-  time:
-    description: 'Your output description here'
+  failed:
+    description: 'failed test count'
+
+  coverage:
+    description: 'coverage percentage'
 
 runs:
   using: node20
