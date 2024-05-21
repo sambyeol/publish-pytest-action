@@ -40,7 +40,9 @@ export async function run(): Promise<void> {
     const token = core.getInput('github-token', { required: true })
     const octokit = github.getOctokit(token)
     if (context.eventName === 'pull_request') {
-      core.info(`Comment to #${context.issue.number}`)
+      core.info(
+        `Comment to ${context.repo.owner}/${context.repo.repo} #${context.issue.number}`
+      )
       octokit.rest.issues.createComment({
         ...context.repo,
         issue_number: context.issue.number,
