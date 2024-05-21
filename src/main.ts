@@ -38,7 +38,7 @@ export async function run(): Promise<void> {
     core.setOutput('coverage', `${nLineRate}% coverage`)
 
     const context = github.context
-    const token = core.getInput('token', { required: true })
+    const token = core.getInput('github-token', { required: true })
     const octokit = github.getOctokit(token)
     if (context.eventName === 'pull_request') {
       const prPayload = context.payload as PullRequestEvent
