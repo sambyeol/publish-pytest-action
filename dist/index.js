@@ -31373,10 +31373,9 @@ async function run() {
         const token = core.getInput('github-token', { required: true });
         const octokit = github.getOctokit(token);
         if (context.eventName === 'pull_request') {
-            const prPayload = context.payload;
             octokit.rest.issues.createComment({
                 ...context.repo,
-                issue_number: prPayload.number,
+                issue_number: context.issue.number,
                 body: `# Test Results
   - Tests: ${nTests}
   - Errors: ${nErrors}
