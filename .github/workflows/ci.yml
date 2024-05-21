@@ -8,9 +8,6 @@ on:
     branches:
       - main
 
-permissions:
-  contents: read
-
 jobs:
   test-typescript:
     name: TypeScript Tests
@@ -57,8 +54,5 @@ jobs:
         id: test-action
         uses: ./
         with:
-          milliseconds: 2000
-
-      - name: Print Output
-        id: output
-        run: echo "${{ steps.test-action.outputs.time }}"
+          junit-xml: data/test-results.xml
+          coverage-xml: data/coverage.xml

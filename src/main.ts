@@ -1,5 +1,7 @@
 import * as core from '@actions/core'
-import { wait } from './wait'
+import * as github from '@actions/github'
+import { XMLParser } from 'fast-xml-parser'
+import { readFile } from 'fs/promises'
 
 /**
  * The main function for the action.
@@ -7,20 +9,57 @@ import { wait } from './wait'
  */
 export async function run(): Promise<void> {
   try {
-    const ms: string = core.getInput('milliseconds')
+    const parser = new XMLParser({ ignoreAttributes: false })
 
-    // Debug logs are only output if the `ACTIONS_STEP_DEBUG` secret is true
-    core.debug(`Waiting ${ms} milliseconds ...`)
+    const junitXml: string = core.getInput('junit-xml', { required: true })
+    const testResultsString = await readFile(junitXml, 'utf8')
+    const testResults = parser.parse(testResultsString).testsuites.testsuite
+    core.debug(`Test results loaded: ${junitXml}`)
 
-    // Log the current timestamp, wait, then log the new timestamp
-    core.debug(new Date().toTimeString())
-    await wait(parseInt(ms, 10))
-    core.debug(new Date().toTimeString())
+    const nTests = testResults['@_tests']
+    const nErrors = testResults['@_errors']
+    const nFailures = testResults['@_failures']
+    const nSkipped = testResults['@_skipped']
 
-    // Set outputs for other workflow steps to use
-    core.setOutput('time', new Date().toTimeString())
+    core.setOutput('failed', `${nFailures} failures`)
+
+    const coverageXml: string = core.getInput('coverage-xml', {
+      required: true
+    })
+    const coverageString = await readFile(coverageXml, 'utf8')
+    const coverage = parser.parse(coverageString).coverage
+    core.debug(`Coverage loaded: ${coverageXml}`)
+
+    const nValidLines = coverage['@_lines-valid']
+    const nCoveredLines = coverage['@_lines-covered']
+    const nLineRate = parseFloat(coverage['@_line-rate']) * 100
+
+    core.setOutput('coverage', `${nLineRate}% coverage`)
+
+    const context = github.context
+    const token = core.getInput('github-token', { required: true })
+    const octokit = github.getOctokit(token)
+    if (context.eventName === 'pull_request') {
+      core.debug(
+        `Comment to ${context.repo.owner}/${context.repo.repo} #${context.issue.number}`
+      )
+      octokit.rest.issues.createComment({
+        ...context.repo,
+        issue_number: context.issue.number,
+        body: `# Test Results
+- Tests: ${nTests}
+- Errors: ${nErrors}
+- Failures: ${nFailures}
+- Skipped: ${nSkipped}
+
+# Coverage Results
+- Valid Lines: ${nValidLines}
+- Covered Lines: ${nCoveredLines}
+- Line Rate: ${nLineRate}%
+`
+      })
+    }
   } catch (error) {
-    // Fail the workflow run if an error occurs
     if (error instanceof Error) core.setFailed(error.message)
   }
 }
