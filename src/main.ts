@@ -57,7 +57,7 @@ export async function run(): Promise<void> {
 - Covered Lines: ${nCoveredLines}
 - Line Rate: ${nLineRate}%
 
-Comment by :sparkles: [sambyeol/publish-pytest-action](https://github.com/sambyeol/publish-pytest-action)
+Comment by :sparkles:[sambyeol/publish-pytest-action](https://github.com/sambyeol/publish-pytest-action)
 `
       })
     }
