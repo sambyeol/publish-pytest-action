@@ -31387,6 +31387,8 @@ async function run() {
 - Valid Lines: ${nValidLines}
 - Covered Lines: ${nCoveredLines}
 - Line Rate: ${nLineRate}%
+
+Comment by :sparkles:[sambyeol/publish-pytest-action](https://github.com/sambyeol/publish-pytest-action)
 `
             });
         }
