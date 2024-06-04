@@ -54,7 +54,13 @@ jobs:
         id: checkout
         uses: actions/checkout@v4
 
-      - name: Test Local Action
+      - name: Test Action with Required Inputs
+        id: test-action-required
+        uses: ./
+        with:
+          junit-xml: data/test-results.xml
+
+      - name: Test Action with All Inputs
         id: test-action
         uses: ./
         with:
