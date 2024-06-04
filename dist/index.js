@@ -31349,6 +31349,7 @@ const promises_1 = __nccwpck_require__(3292);
  */
 async function run() {
     try {
+        var body = '# Pytest Report\n';
         const parser = new fast_xml_parser_1.XMLParser({ ignoreAttributes: false });
         const junitXml = core.getInput('junit-xml', { required: true });
         const testResultsString = await (0, promises_1.readFile)(junitXml, 'utf8');
@@ -31359,16 +31360,38 @@ async function run() {
         const nFailures = testResults['@_failures'];
         const nSkipped = testResults['@_skipped'];
         core.setOutput('failed', `${nFailures} failures`);
+        body =
+            body +
+                `
+## Test Results
+- Tests: ${nTests}
+- Errors: ${nErrors}
+- Failures: ${nFailures}
+- Skipped: ${nSkipped}
+`;
         const coverageXml = core.getInput('coverage-xml', {
-            required: true
+            required: false
         });
-        const coverageString = await (0, promises_1.readFile)(coverageXml, 'utf8');
-        const coverage = parser.parse(coverageString).coverage;
-        core.debug(`Coverage loaded: ${coverageXml}`);
-        const nValidLines = coverage['@_lines-valid'];
-        const nCoveredLines = coverage['@_lines-covered'];
-        const nLineRate = parseFloat(coverage['@_line-rate']) * 100;
-        core.setOutput('coverage', `${nLineRate}% coverage`);
+        if (coverageXml) {
+            const coverageString = await (0, promises_1.readFile)(coverageXml, 'utf8');
+            const coverage = parser.parse(coverageString).coverage;
+            core.debug(`Coverage loaded: ${coverageXml}`);
+            const nValidLines = coverage['@_lines-valid'];
+            const nCoveredLines = coverage['@_lines-covered'];
+            const nLineRate = parseFloat(coverage['@_line-rate']) * 100;
+            core.setOutput('coverage', `${nLineRate}% coverage`);
+            body =
+                body +
+                    `
+## Coverage Results
+- Valid Lines: ${nValidLines}
+- Covered Lines: ${nCoveredLines}
+- Line Rate: ${nLineRate}%
+`;
+        }
+        body =
+            body +
+                '\nComment by :sparkles:[sambyeol/publish-pytest-action](https://github.com/sambyeol/publish-pytest-action)';
         const context = github.context;
         const token = core.getInput('github-token', { required: true });
         const octokit = github.getOctokit(token);
@@ -31377,19 +31400,7 @@ async function run() {
             octokit.rest.issues.createComment({
                 ...context.repo,
                 issue_number: context.issue.number,
-                body: `# Test Results
-- Tests: ${nTests}
-- Errors: ${nErrors}
-- Failures: ${nFailures}
-- Skipped: ${nSkipped}
-
-# Coverage Results
-- Valid Lines: ${nValidLines}
-- Covered Lines: ${nCoveredLines}
-- Line Rate: ${nLineRate}%
-
-Comment by :sparkles:[sambyeol/publish-pytest-action](https://github.com/sambyeol/publish-pytest-action)
-`
+                body
             });
         }
     }
