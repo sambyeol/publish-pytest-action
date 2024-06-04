@@ -31349,7 +31349,7 @@ const promises_1 = __nccwpck_require__(3292);
  */
 async function run() {
     try {
-        let body = '# Pytest Report\n';
+        let body = '# Pytest Report';
         const parser = new fast_xml_parser_1.XMLParser({ ignoreAttributes: false });
         const junitXml = core.getInput('junit-xml', { required: true });
         const testResultsString = await (0, promises_1.readFile)(junitXml, 'utf8');
@@ -31360,9 +31360,8 @@ async function run() {
         const nFailures = testResults['@_failures'];
         const nSkipped = testResults['@_skipped'];
         core.setOutput('failed', `${nFailures} failures`);
-        body =
-            body +
-                `
+        body = `${body}
+
 ## Test Results
 - Tests: ${nTests}
 - Errors: ${nErrors}
@@ -31380,18 +31379,17 @@ async function run() {
             const nCoveredLines = coverage['@_lines-covered'];
             const nLineRate = parseFloat(coverage['@_line-rate']) * 100;
             core.setOutput('coverage', `${nLineRate}% coverage`);
-            body =
-                body +
-                    `
+            body = `${body}
+
 ## Coverage Results
 - Valid Lines: ${nValidLines}
 - Covered Lines: ${nCoveredLines}
 - Line Rate: ${nLineRate}%
 `;
         }
-        body =
-            body +
-                '\nComment by :sparkles:[sambyeol/publish-pytest-action](https://github.com/sambyeol/publish-pytest-action)';
+        body = `${body}
+
+Comment by :sparkles:[sambyeol/publish-pytest-action](https://github.com/sambyeol/publish-pytest-action)`;
         const context = github.context;
         const token = core.getInput('github-token', { required: true });
         const octokit = github.getOctokit(token);

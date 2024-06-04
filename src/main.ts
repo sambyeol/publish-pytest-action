@@ -9,7 +9,7 @@ import { readFile } from 'fs/promises'
  */
 export async function run(): Promise<void> {
   try {
-    let body = '# Pytest Report\n'
+    let body = '# Pytest Report'
 
     const parser = new XMLParser({ ignoreAttributes: false })
 
@@ -24,9 +24,8 @@ export async function run(): Promise<void> {
     const nSkipped = testResults['@_skipped']
 
     core.setOutput('failed', `${nFailures} failures`)
-    body =
-      body +
-      `
+    body = `${body}
+
 ## Test Results
 - Tests: ${nTests}
 - Errors: ${nErrors}
@@ -47,9 +46,8 @@ export async function run(): Promise<void> {
       const nLineRate = parseFloat(coverage['@_line-rate']) * 100
 
       core.setOutput('coverage', `${nLineRate}% coverage`)
-      body =
-        body +
-        `
+      body = `${body}
+
 ## Coverage Results
 - Valid Lines: ${nValidLines}
 - Covered Lines: ${nCoveredLines}
@@ -57,9 +55,9 @@ export async function run(): Promise<void> {
 `
     }
 
-    body =
-      body +
-      '\nComment by :sparkles:[sambyeol/publish-pytest-action](https://github.com/sambyeol/publish-pytest-action)'
+    body = `${body}
+
+Comment by :sparkles:[sambyeol/publish-pytest-action](https://github.com/sambyeol/publish-pytest-action)`
 
     const context = github.context
     const token = core.getInput('github-token', { required: true })
