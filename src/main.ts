@@ -9,7 +9,7 @@ import { readFile } from 'fs/promises'
  */
 export async function run(): Promise<void> {
   try {
-    var body = '# Pytest Report\n'
+    let body = '# Pytest Report\n'
 
     const parser = new XMLParser({ ignoreAttributes: false })
 
