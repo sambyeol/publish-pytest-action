@@ -12,6 +12,11 @@ inputs:
     default: ${{ github.token }}
     required: false
 
+  title:
+    description: 'title of the comment'
+    default: 'Pytest Report'
+    required: false
+
   junit-xml:
     description: 'path to junit xml file'
     required: true

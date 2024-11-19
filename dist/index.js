@@ -32113,7 +32113,8 @@ const promises_1 = __nccwpck_require__(1943);
  */
 async function run() {
     try {
-        let body = '# Pytest Report';
+        const titleString = core.getInput('title', { required: false });
+        let body = `# ${titleString}`;
         const parser = new fast_xml_parser_1.XMLParser({ ignoreAttributes: false });
         const junitXml = core.getInput('junit-xml', { required: true });
         const testResultsString = await (0, promises_1.readFile)(junitXml, 'utf8');
