@@ -9,7 +9,9 @@ import { readFile } from 'fs/promises'
  */
 export async function run(): Promise<void> {
   try {
-    let body = '# Pytest Report'
+    const titleString = core.getInput('title', { required: false })
+
+    let body = `# ${titleString}`
 
     const parser = new XMLParser({ ignoreAttributes: false })
 
