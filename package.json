@@ -67,7 +67,7 @@
   "dependencies": {
     "@actions/core": "^1.11.1",
     "@actions/github": "^6.0.0",
-    "fast-xml-parser": "^5.0.8"
+    "fast-xml-parser": "^5.0.9"
   },
   "devDependencies": {
     "@jest/globals": "^29.7.0",
