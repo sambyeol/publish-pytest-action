@@ -25,6 +25,25 @@ inputs:
     description: 'path to coverage xml file'
     required: false
 
+  comment-identifier:
+    description:
+      'A unique identifier for the comment, typically derived from matrix
+      variables (e.g., `py\$\{\{ matrix.python-version \}\}-\$\{\{ matrix.os
+      \}\}`). Used to ensure `comment-mode` (`update`, `hide`, `delete`) targets
+      only comments from the same job or matrix configuration.'
+    required: false
+    default: ''
+
+  comment-mode:
+    description: |
+      How to handle previous comments from this action.
+      - `update`: Update the previous comment.
+      - `hide`: Hide previous comments.
+      - `delete`: Delete previous comments.
+      - `new`: Create a new comment.
+    required: false
+    default: 'new'
+
 outputs:
   failed:
     description: 'failed test count'
