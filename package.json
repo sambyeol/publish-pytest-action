@@ -67,7 +67,7 @@
   "dependencies": {
     "@actions/core": "^1.11.1",
     "@actions/github": "^6.0.1",
-    "fast-xml-parser": "^5.2.3"
+    "fast-xml-parser": "^5.2.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
