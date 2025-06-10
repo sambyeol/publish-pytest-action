@@ -24,8 +24,6 @@ jobs:
       if: ${{ always() }} # Even if the tests fail, publish the report
       with:
         junit-xml: junit/test-results.xml
-        comment-mode: 'update' # Recommended for matrix builds
-        comment-identifier: 'py${{ matrix.python-version }}-${{ matrix.os }}' # Example identifier
 ```
 
 ## Configuration
