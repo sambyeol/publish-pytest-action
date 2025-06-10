@@ -59,6 +59,7 @@ jobs:
         uses: ./
         with:
           junit-xml: data/test-results.xml
+          comment-identifier: 'to-collapsed'
 
       - name: Test Action with All Inputs
         id: test-action
@@ -73,3 +74,11 @@ jobs:
         with:
           junit-xml: data/test-results.xml
           title: 'Custom Title'
+
+      - name: Test Action with Comment Mode
+        id: test-action-comment-mode
+        uses: ./
+        with:
+          junit-xml: data/test-results.xml
+          comment-mode: 'hide'
+          comment-identifier: 'to-collapsed'
