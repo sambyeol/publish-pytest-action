@@ -11,7 +11,6 @@ export async function run(): Promise<void> {
   try {
     const titleString = core.getInput('title', { required: false })
 
-
     const COMMENT_FOOTER =
       'Comment by :sparkles:[sambyeol/publish-pytest-action](https://github.com/sambyeol/publish-pytest-action)'
     const ACTION_COMMENT_MARKER = '<!-- GHA-PUBLISH-PYTEST-ACTION-COMMENT -->'
@@ -98,7 +97,9 @@ export async function run(): Promise<void> {
         warningMessage + '\n\n---\n\n' + contentForGithubComment
     }
 
-    let fullCommentBody = contentForGithubComment + `
+    let fullCommentBody =
+      contentForGithubComment +
+      `
 
 ${COMMENT_FOOTER}
 ${ACTION_COMMENT_MARKER}`
@@ -134,25 +135,33 @@ ${IDENTIFIER_PREFIX}${commentIdentifier}${IDENTIFIER_SUFFIX}`
             comment.user?.login === 'github-actions[bot]' &&
             comment.body?.includes(ACTION_COMMENT_MARKER)
         )
-        core.debug(`Found ${allActionComments.length} total comments by this action.`)
+        core.debug(
+          `Found ${allActionComments.length} total comments by this action.`
+        )
 
-        const commentsToProcess = commentIdentifier ? allActionComments
-          .filter(
-            comment => parseCommentIdentifier(comment.body) === commentIdentifier
-          )
-          .sort(
-            (a, b) =>
-              new Date(b.created_at).getTime() -
-              new Date(a.created_at).getTime()
-          ) : [];
+        const commentsToProcess = commentIdentifier
+          ? allActionComments
+              .filter(
+                comment =>
+                  parseCommentIdentifier(comment.body) === commentIdentifier
+              )
+              .sort(
+                (a, b) =>
+                  new Date(b.created_at).getTime() -
+                  new Date(a.created_at).getTime()
+              )
+          : []
         core.debug(
           `Found ${commentsToProcess.length} comments with identifier '${commentIdentifier}'.`
         )
 
-        if (commentIdentifier) { // Only process if identifier is provided
+        if (commentIdentifier) {
+          // Only process if identifier is provided
           if (commentMode === 'update') {
             for (const comment of commentsToProcess) {
-              core.debug(`Updating comment ID: ${comment.id} with identifier '${commentIdentifier}'`)
+              core.debug(
+                `Updating comment ID: ${comment.id} with identifier '${commentIdentifier}'`
+              )
               await octokit.rest.issues.updateComment({
                 ...context.repo,
                 comment_id: comment.id,
@@ -163,7 +172,9 @@ ${IDENTIFIER_PREFIX}${commentIdentifier}${IDENTIFIER_SUFFIX}`
             }
           } else if (commentMode === 'hide') {
             for (const comment of commentsToProcess) {
-              core.debug(`Hiding comment ID: ${comment.id} (Node ID: ${comment.node_id})`)
+              core.debug(
+                `Hiding comment ID: ${comment.id} (Node ID: ${comment.node_id})`
+              )
               try {
                 await octokit.graphql({
                   query: `mutation($input: MinimizeCommentInput!) { minimizeComment(input: $input) { minimizedComment { isMinimized } } }`,
@@ -174,11 +185,15 @@ ${IDENTIFIER_PREFIX}${commentIdentifier}${IDENTIFIER_SUFFIX}`
                 })
                 core.info(`Hid comment ID: ${comment.id}`)
               } catch (gqlError) {
-                core.warning(`Failed to hide comment ID ${comment.id}: ${gqlError instanceof Error ? gqlError.message : gqlError}`)
+                core.warning(
+                  `Failed to hide comment ID ${comment.id}: ${gqlError instanceof Error ? gqlError.message : gqlError}`
+                )
               }
             }
           } else if (commentMode === 'delete') {
-            core.debug(`Executing "delete" strategy for comments with identifier '${commentIdentifier}'.`)
+            core.debug(
+              `Executing "delete" strategy for comments with identifier '${commentIdentifier}'.`
+            )
             for (const comment of commentsToProcess) {
               core.debug(`Deleting comment ID: ${comment.id}`)
               await octokit.rest.issues.deleteComment({
@@ -206,7 +221,9 @@ ${IDENTIFIER_PREFIX}${commentIdentifier}${IDENTIFIER_SUFFIX}`
     } else if (context.eventName !== 'pull_request') {
       core.info('Not a pull request, skipping comment creation/management.')
     } else if (!context.issue.number) {
-      core.warning('Could not get pull request number from context, skipping comment creation/management.')
+      core.warning(
+        'Could not get pull request number from context, skipping comment creation/management.'
+      )
     }
   } catch (error) {
     if (error instanceof Error) core.setFailed(error.message)

@@ -26,7 +26,11 @@ inputs:
     required: false
 
   comment-identifier:
-    description: "A unique identifier for the comment, typically derived from matrix variables (e.g., `py${{ matrix.python-version }}-${{ matrix.os }}`). Used to ensure `comment-mode` (`update`, `hide`, `delete`) targets only comments from the same job or matrix configuration."
+    description:
+      'A unique identifier for the comment, typically derived from matrix
+      variables (e.g., `py${{ matrix.python-version }}-${{ matrix.os }}`). Used
+      to ensure `comment-mode` (`update`, `hide`, `delete`) targets only
+      comments from the same job or matrix configuration.'
     required: false
     default: ''
 
