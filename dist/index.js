@@ -30029,11 +30029,9 @@ async function run() {
             !commentIdentifier &&
             github.context.eventName === 'pull_request') {
             const warningMessage = `:warning: **Warning:** \`comment-mode\` was set to '${commentMode}' but no \`comment-identifier\` was provided. This comment is new; no previous comments were modified. Please check a \`comment-identifier\` to enable managing comments specific to this job configuration.`;
-            contentForGithubComment =
-                warningMessage + '\n\n---\n\n' + contentForGithubComment;
+            contentForGithubComment = `${warningMessage}\n\n---\n\n${contentForGithubComment}`;
         }
-        let fullCommentBody = contentForGithubComment +
-            `
+        let fullCommentBody = `${contentForGithubComment}
 
 ${COMMENT_FOOTER}
 ${ACTION_COMMENT_MARKER}`;
