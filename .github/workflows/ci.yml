@@ -10,7 +10,6 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write
 
 jobs:
   test-typescript:
@@ -21,6 +20,8 @@ jobs:
       - name: Checkout
         id: checkout
         uses: actions/checkout@v5
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js
         id: setup-node
@@ -49,10 +50,15 @@ jobs:
     name: GitHub Actions Test
     runs-on: ubuntu-latest
 
+    permissions:
+      pull-requests: write
+
     steps:
       - name: Checkout
         id: checkout
         uses: actions/checkout@v5
+        with:
+          persist-credentials: false
 
       - name: Test Action with Required Inputs
         id: test-action-required
