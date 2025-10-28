@@ -48,4 +48,5 @@ jobs:
           TYPESCRIPT_DEFAULT_STYLE: prettier
           VALIDATE_ALL_CODEBASE: true
           VALIDATE_GIT_MERGE_CONFLICT_MARKERS: true
+          VALIDATE_TYPESCRIPT_ES: true
           VALIDATE_TYPESCRIPT_PRITTIER: true
