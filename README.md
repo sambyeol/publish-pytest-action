@@ -20,7 +20,7 @@ jobs:
       run: |
         pytest . --junitxml=junit/test-results.xml
     - name: Publish pytest report
-      uses: sambyeol/publish-pytest-action@v2
+      uses: sambyeol/publish-pytest-action@v4
       if: ${{ always() }} # Even if the tests fail, publish the report
       with:
         junit-xml: junit/test-results.xml
